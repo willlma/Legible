@@ -1,0 +1,10 @@
+{
+  "name": "nofixed",
+  "title": "nofixed",
+  "id": "jid1-6LuAoTHYdUNWog",
+  "description": "a basic add-on",
+  "author": "William Marquardt",
+  "license": "MPL 2.0",
+  "version": "0.2",
+  "permissions": {"private-browsing": true}
+}
