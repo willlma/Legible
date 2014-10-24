@@ -1,9 +1,7 @@
 
 (function() {
 
-const url = location.href;
 const domain = location.hostname;
-self.port.emit('addDomain', domain);
 self.port.on('removeDomain', function() {
   self.port.emit('removeDomain', domain);
 });
@@ -61,22 +59,28 @@ var preventPropagation = function(evt) {
 }
 window.addEventListener('scroll', preventPropagation, true);
 
+
 self.port.on('detach', function() {
-  if (!location || location.href!==url) return;
-  window.removeEventListener('scroll', preventPropagation, true);
-  // TODO: put the elements back
-  hiddenElems.forEach(function(item) {
-    var elem, display;
-    if (item instanceof HTMLElement)
-      elem = item,
-      display = position = '';
-    else
-      elem = item.elem,
-      position = item.position,
-      display = item.display; 
-    elem.style.position = position;
-    elem.style.display = display;
-  });
+  // if (!location || location.href!==url) return;
+  try {
+    window.removeEventListener('scroll', preventPropagation, true);
+    hiddenElems.forEach(function(item) {
+      var elem, display;
+      if (item instanceof HTMLElement)
+        elem = item,
+        display = position = '';
+      else
+        elem = item.elem,
+        position = item.position,
+        display = item.display; 
+      elem.style.position = position;
+      elem.style.display = display;
+    });
+  } catch(error) {
+    //If I get an error it means the doc is no longer available,
+    //so no need to do anything
+    console.log(TAG+'error on detach: '+error);
+  }
 });
   
 })();
